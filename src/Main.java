@@ -4,9 +4,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         //Get the player's names
-        System.out.println("Player 1, what's your name? ");
+        System.out.print("Player 1, what's your name? ");
         String p1 = in.nextLine();
-        System.out.println("Player 2, what's your name? ");
+        System.out.print("Player 2, what's your name? ");
         String p2 = in.nextLine();
         //3x3 Tic Tac Toe board
         //- empty space
@@ -19,63 +19,72 @@ public class Main {
                 board[i][j] = '-';
             }
         }
-        //Draw the board
-        drawBoard(board);
         //Keep track of whose turn it is
         boolean isPlayer1 = true;
-        //Keep track of what symbol we are using to play
-        char symbol = ' ';
-        if (isPlayer1) {
-            symbol = 'x';
-        } else {
-            symbol = 'o';
-        }
-        //Print out the player's turn
-        if (isPlayer1) {
-            System.out.println(p1 + "'s Turn (x):");
-        } else {
-            System.out.println(p2 + "'s Turn (o):");
-        }
-        //Row & col variables
-        int row = 0;
-        int col = 0;
-        while (true) {
-            //Get row & column from user
-            System.out.print("Enter a row (0, 1 or 2): ");
-            row = in.nextInt();
-            System.out.print("Enter a column (0, 1 or 2): ");
-            col = in.nextInt();
-            //
-            if (row < 0 || col < 0 || row > 2 || col > 2) {
-                //Row & column out of bounds
-                System.out.println("Your row & col ate out of bounds!");
-            } else if (board[row][col] != '-') {
-                //Board position has an x or o
-                System.out.println("Someone has already made a move there!");
+        //Keep track if the game has ended
+        boolean gameEnded = false;
+        while (!gameEnded) {
+            //Draw the board
+            drawBoard(board);
+            //Keep track of what symbol we are using to play
+            char symbol = ' ';
+            if (isPlayer1) {
+                symbol = 'x';
             } else {
-                //Row & col are valid!
-                break;
+                symbol = 'o';
+            }
+            //Print out the player's turn
+            if (isPlayer1) {
+                System.out.println(p1 + "'s Turn (x):");
+            } else {
+                System.out.println(p2 + "'s Turn (o):");
+            }
+            //Row & col variables
+            int row = 0;
+            int col = 0;
+            while (true) {
+                //Get row & column from user
+                System.out.print("Enter a row (0, 1 or 2): ");
+                row = in.nextInt();
+                System.out.print("Enter a col (0, 1 or 2): ");
+                col = in.nextInt();
+                //
+                if (row < 0 || col < 0 || row > 2 || col > 2) {
+                    //Row & column out of bounds
+                    System.out.println("Your row & col ate out of bounds!");
+                } else if (board[row][col] != '-') {
+                    //Board position has an x or o
+                    System.out.println("Someone has already made a move there!");
+                } else {
+                    //Row & col are valid!
+                    break;
+                }
+            }
+            //Setting the position on the board to the player's symbol
+            board[row][col] = symbol;
+            //Check if a player has won
+            if (hasWon(board) == 'x') {
+                //Player1 has won
+                System.out.println(p1 + " has won!");
+                gameEnded = true;
+            } else if (hasWon(board) == 'o') {
+                //Player 2 has won
+                System.out.println(p2 + " has won!");
+                gameEnded = true;
+            } else {
+                //Nobody has won
+                if (hasTied(board)) {
+                    //hasTied
+                    System.out.println("It's a tie!");
+                    gameEnded = true;
+                } else {
+                    //Continue the game & toggles the turn
+                    isPlayer1 = !isPlayer1;
+                }
             }
         }
-        //Setting the position on the board to the player's symbol
-        board[row][col] = symbol;
-        //Check if a player has won
-        if (hasWon(board) == 'x') {
-            //Player1 has won
-            System.out.println(p1 + " has won!");
-        } else if (hasWon(board) == 'o') {
-            //Player 2 has won
-            System.out.println(p2 + " has won!");
-        } else {
-            //Nobody has won
-            if (hasTied(board)) {
-                //hasTied
-                System.out.println("It's a tie!");
-            } else {
-                //Continue the game
-
-            }
-        }
+        //Print out final state of the board
+        drawBoard(board);
     }
 
     //Printing out the board
