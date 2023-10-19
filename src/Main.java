@@ -21,6 +21,37 @@ public class Main {
         }
         //Draw the board
         drawBoard(board);
+        //Keep track of whose turn it is
+        boolean isPlayer1 = true;
+        //Keep track of what symbol we are using to play
+        char symbol = ' ';
+        if (isPlayer1) {
+            symbol = 'x';
+        } else {
+            symbol = 'o';
+        }
+        //Row & col variables
+        int row = 0;
+        int col = 0;
+        while (true) {
+            //Get row & column from user
+            System.out.print("Enter a row (0, 1 or 2): ");
+            row = in.nextInt();
+            System.out.print("Enter a column (0, 1 or 2): ");
+            col = in.nextInt();
+            //
+            if (row < 0 || col < 0 || row > 2 || col > 2) {
+                //Row & column out of bounds
+                System.out.println("Your row & col ate out of bounds!");
+            } else if (board[row][col] != '-') {
+                //Board position has an x or o
+                System.out.println("Someone has already made a move there!");
+            } else {
+                //Row & col are valid!
+                break;
+            }
+        }
+
     }
 
     //Printing out the board
