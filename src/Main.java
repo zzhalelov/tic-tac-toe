@@ -19,5 +19,17 @@ public class Main {
                 board[i][j] = '-';
             }
         }
+        //Draw the board
+        drawBoard(board);
+    }
+
+    //Printing out the board
+    public static void drawBoard(char[][] board) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
