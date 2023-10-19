@@ -30,6 +30,12 @@ public class Main {
         } else {
             symbol = 'o';
         }
+        //Print out the player's turn
+        if (isPlayer1) {
+            System.out.println(p1 + "'s Turn (x):");
+        } else {
+            System.out.println(p2 + "'s Turn (o):");
+        }
         //Row & col variables
         int row = 0;
         int col = 0;
@@ -51,7 +57,25 @@ public class Main {
                 break;
             }
         }
+        //Setting the position on the board to the player's symbol
+        board[row][col] = symbol;
+        //Check if a player has won
+        if (hasWon(board) == 'x') {
+            //Player1 has won
+            System.out.println(p1 + " has won!");
+        } else if (hasWon(board) == 'o') {
+            //Player 2 has won
+            System.out.println(p2 + " has won!");
+        } else {
+            //Nobody has won
+            if (hasTied(board)) {
+                //hasTied
+                System.out.println("It's a tie!");
+            } else {
+                //Continue the game
 
+            }
+        }
     }
 
     //Printing out the board
@@ -62,5 +86,41 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    public static char hasWon(char[][] board) {
+        //Row
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != '-') {
+                return board[i][0];
+            }
+        }
+        //Column
+        for (int j = 0; j < 3; j++) {
+            if (board[0][j] == board[1][j] && board[1][j] == board[2][j] && board[0][j] != '-') {
+                return board[0][j];
+            }
+        }
+        //Diagonals
+        if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != '-') {
+            return board[0][0];
+        }
+        if (board[2][0] == board[1][1] && board[1][1] == board[0][2] && board[2][0] != '-') {
+            return board[2][0];
+        }
+        //Nobody has won
+        return '-';
+    }
+
+    //Check if the board is full
+    public static boolean hasTied(char[][] board) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == '-') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
